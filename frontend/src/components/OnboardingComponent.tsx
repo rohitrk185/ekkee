@@ -41,6 +41,7 @@ const OnboardingComponent = ({ questions }: Props) => {
       try {
         submitAnswers(answers);
       } catch (error) {
+        console.error("Error submitting answers:", error);
         toast.error("Unable to complete your onboarding. Please try again", {
           toastId: "onboardingError",
         });
