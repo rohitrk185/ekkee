@@ -1,20 +1,29 @@
 "use client";
-import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 interface LanguageContextType {
   language: string;
   setLanguage: (lang: string) => void;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<LanguageContextType | undefined>(
+  undefined
+);
 
 export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<string>("en");
 
   useEffect(() => {
-    const stored = typeof window !== "undefined" ? localStorage.getItem("language") : null;
+    const stored =
+      typeof window !== "undefined" ? localStorage.getItem("language") : null;
     if (stored && stored !== language) setLanguageState(stored);
-  }, []);
+  }, [language]);
 
   const setLanguage = (lang: string) => {
     setLanguageState(lang);
@@ -32,6 +41,7 @@ export const LanguageProvider = ({ children }: { children: ReactNode }) => {
 
 export const useLanguage = () => {
   const ctx = useContext(LanguageContext);
-  if (!ctx) throw new Error("useLanguage must be used within a LanguageProvider");
+  if (!ctx)
+    throw new Error("useLanguage must be used within a LanguageProvider");
   return ctx;
-}; 
+};

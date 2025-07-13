@@ -6,6 +6,16 @@ import { Option, Question } from "@/types";
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+interface QuestionsData {
+  id: string;
+  text: Record<string, string>;
+  instruction: Record<string, string>;
+  canSkip: boolean;
+  options: Option[];
+  type: string;
+  maxSelections: number;
+}
+
 async function getOnboardingData() {
   try {
     const response = await fetch(
@@ -21,23 +31,25 @@ async function getOnboardingData() {
       throw new Error(`Failed to fetch data: ${response.statusText}`);
     }
 
-    const data: unknown[] = await response.json();
+    const data: QuestionsData[] = await response.json();
     console.log("data: ", data);
 
-    const questions: Question[] = data.map((question: any) => ({
-      // Map API fields to your frontend schema
-      questionId: question.id,
-      questionTitle: question.text,
-      description: question.instruction || "", // Provide description, fallback to empty string if missing
-      isSkippable: question.canSkip,
-      // Convert the array of objects to an array of strings
-      options: question.options.map((option: Option) => option),
-      // Determine isMultiChoice based on the 'type' field
-      isMultiChoice: question.type === "multi_choice",
-
-      // Carry over maxSelections if it exists
-      maxSelections: question.maxSelections || Infinity,
-    }));
+    const questions: Question[] = data.map((question: QuestionsData) => {
+      const questionData: Question = {
+        // Map API fields to your frontend schema
+        questionId: question.id,
+        questionTitle: question.text,
+        description: question.instruction || "", // Provide description, fallback to empty string if missing
+        isSkippable: question.canSkip,
+        // Convert the array of objects to an array of strings
+        options: question.options.map((option: Option) => option),
+        // Determine isMultiChoice based on the 'type' field
+        isMultiChoice: question.type === "multi_choice",
+        // Carry over maxSelections if it exists
+        maxSelections: question.maxSelections || Infinity,
+      };
+      return questionData;
+    });
 
     return questions;
   } catch (error) {
@@ -54,15 +66,19 @@ const OnboardingPage = () => {
 
   React.useEffect(() => {
     getOnboardingData()
-      .then((data) => {
+      .then((data: Question[]) => {
         if (Array.isArray(data) && data.length > 0) {
-          const mapped: Question[] = data.map((question: any) => ({
-            questionId: question.id,
+          const mapped: Question[] = data.map((question: Question) => ({
+            ...question,
             questionTitle:
-              typeof question.text === "object" && question.text !== null
-                ? question.text
+              typeof question.questionTitle === "object" &&
+              question.questionTitle !== null
+                ? question.questionTitle
                 : {
-                    en: typeof question.text === "string" ? question.text : "",
+                    en:
+                      typeof question.questionTitle === "string"
+                        ? question.questionTitle
+                        : "",
                   },
             description:
               typeof question.description === "object" &&
@@ -84,8 +100,7 @@ const OnboardingPage = () => {
                         ? question.instruction
                         : "",
                   },
-            isSkippable: question.canSkip,
-            options: question.options.map((option: any) => ({
+            options: question.options.map((option: Option) => ({
               label:
                 typeof option.label === "object" && option.label !== null
                   ? option.label
@@ -97,8 +112,6 @@ const OnboardingPage = () => {
                     },
               icon: option.icon,
             })),
-            isMultiChoice: question.type === "multi_choice",
-            maxSelections: question.maxSelections || Infinity,
           }));
           setQuestions(mapped);
           setFetchError(null);
@@ -108,7 +121,7 @@ const OnboardingPage = () => {
           );
         }
       })
-      .catch((error) => {
+      .catch(() => {
         setFetchError(
           "Could not load onboarding questions. Please check your network or contact support."
         );

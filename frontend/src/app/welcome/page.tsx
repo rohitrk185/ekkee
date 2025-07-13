@@ -5,7 +5,7 @@
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import LanguageSelect from "@/components/LanguageSelect";
-import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 import React from "react";
 
 const translations = {
@@ -28,7 +28,7 @@ type Language = keyof typeof translations;
 function WelcomeContent() {
   const router = useRouter();
   const { language } = useLanguage();
-  const t = translations[(language as Language)] || translations.en;
+  const t = translations[language as Language] || translations.en;
 
   const handleStart = () => {
     router.push("/learn/ikagai");
