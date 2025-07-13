@@ -2,7 +2,7 @@
 
 import { useOnboarding } from "@/contexts/onboardingContext";
 import { Question } from "@/types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CurStepIndicator from "./curStepIndicator";
 import QuestionCard from "./Question";
 import { OptionsSelector } from "./Options";
@@ -31,10 +31,16 @@ const OnboardingComponent = ({ questions }: Props) => {
 
   const questionID = currentQuestion?.questionId || "";
 
+  console.log(currentQuestion);
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
     answers[`q_${questionID}`] || answers[questionID] || []
   );
+
+  useEffect(() => {
+    setSelectedOptions(answers[`q_${questionID}`] || answers[questionID] || []);
+  }, [currentQuestion?.questionId]);
 
   if (!currentQuestion) return null;
 
@@ -60,19 +66,24 @@ const OnboardingComponent = ({ questions }: Props) => {
           selectedOptions,
           submissionDocId
         );
+
+      console.log("nextQuestionData: ", nextQuestionData);
+      console.log("submissionDocumentId: ", submissionDocumentId);
+
       // We should now save this data in questions state of context
       // if the question already exists in questions state of context, we should skip it
-      storeQuestionData(nextQuestionData);
       setSubmissionDocId(submissionDocumentId);
 
-      if (currentStep === questions.length) {
+      if (currentStep === 10) {
         // Route to success page
+        storeQuestionData(nextQuestionData);
         router.push("/onboarding-success");
         setSubmissionDocId(undefined);
         return;
       }
 
-      handleNext();
+      storeQuestionData(nextQuestionData);
+      // handleNext();
       return;
     } catch (error) {
       console.error("Error submitting answers:", error);

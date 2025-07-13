@@ -21,6 +21,7 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
   selectedOptions,
   setSelectedOptions,
 }) => {
+  console.log("maxSelections: ", maxSelections, selectedOptions);
   // Determine if we should use a single column layout.
   // This happens if any option text is longer than a certain threshold (e.g., 15 characters).
   const useSingleColumn = useMemo(() => {

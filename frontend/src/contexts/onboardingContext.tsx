@@ -23,7 +23,7 @@ interface OnboardingContextType {
   handleNext: () => void;
   handleBack: () => void;
   clearCurrentAnswer: () => void;
-  storeQuestionData: (questionData: Question[]) => void;
+  storeQuestionData: (questionData: Question) => void;
   submissionDocId: string | undefined;
   setSubmissionDocId: React.Dispatch<React.SetStateAction<string | undefined>>;
   //   resetOnboarding: () => void;
@@ -50,6 +50,8 @@ export const OnboardingProvider = ({
   const currentQuestion = useMemo<Question | null>(() => {
     return questions[currentStep - 1] || null;
   }, [currentStep, questions]);
+
+  console.log("answers: ", answers);
 
   const handleAnswerChange = (optionText: string) => {
     if (!currentQuestion) return;
@@ -88,16 +90,17 @@ export const OnboardingProvider = ({
     setAnswers((prev) => ({ ...prev, [questionKey]: [] }));
   }, [currentQuestion?.questionId]);
 
-  const storeQuestionData = (questionData: Question[]) => {
+  const storeQuestionData = (questionData: Question) => {
     setQuestions((prevQuestions: Question[]) => {
-      const existingQuestionIds = new Set(
-        prevQuestions.map((q: Question) => q.questionId)
-      );
-      const newQuestions = questionData.filter(
-        (q) => !existingQuestionIds.has(q.questionId)
-      );
-      return [...prevQuestions, ...newQuestions];
+      return prevQuestions.map((question: Question) => {
+        if (question.questionId === questionData.questionId) {
+          return questionData;
+        }
+        return question;
+      });
     });
+
+    handleNext();
   };
 
   const value: OnboardingContextType = {
