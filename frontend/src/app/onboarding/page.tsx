@@ -1,9 +1,7 @@
 import OnboardingComponent from "@/components/OnboardingComponent";
 import { OnboardingProvider } from "@/contexts/onboardingContext";
+import { Option, Question } from "@/types";
 import React from "react";
-
-// Implement SSG and pass it to the component below
-type Props = {};
 
 // This function fetches data from your external API.
 // Next.js automatically memoizes (caches) the result of this fetch.
