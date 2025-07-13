@@ -1,5 +1,5 @@
 import { Option } from "@/types";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { toast } from "react-toastify";
 import { Button } from "./ui/button";
 
@@ -8,6 +8,7 @@ interface OptionsSelectorProps {
   isMultiChoice: boolean;
   maxSelections?: number;
   onSelectionChange: (selectedOptions: string) => void;
+  language: string;
 }
 
 export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
@@ -15,14 +16,25 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
   isMultiChoice,
   maxSelections = Infinity, // Default to no limit if not provided
   onSelectionChange,
+  language,
 }) => {
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+
+  // Reset selected options when language or options change
+  useEffect(() => {
+    setSelectedOptions([]);
+  }, [language, options]);
 
   // Determine if we should use a single column layout.
   // This happens if any option text is longer than a certain threshold (e.g., 15 characters).
   const useSingleColumn = useMemo(() => {
-    return options.some((option) => option.label.length > 20);
-  }, [options]);
+    return options.some((option) => {
+      const labelObj = typeof option.label === "object" && option.label !== null
+        ? option.label
+        : { en: typeof option.label === "string" ? option.label : "Unknown" };
+      return (labelObj[language] || labelObj["en"] || "").length > 20;
+    });
+  }, [options, language]);
 
   const handleOptionClick = (option: string) => {
     let newSelection: string[];
@@ -60,13 +72,14 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
       }`}
     >
       {options.map((option) => {
-        const isSelected = selectedOptions.includes(option.label);
+        const label = option.label[language] || option.label["en"];
+        const isSelected = selectedOptions.includes(label);
         return (
           <Button
             type="button"
             variant="outline"
-            key={option.label}
-            onClick={() => handleOptionClick(option.label)}
+            key={label}
+            onClick={() => handleOptionClick(label)}
             className={`
               w-full font-medium py-3 px-4 rounded-lg border transition-all duration-200 focus:outline-none text-black flex justify-center items-center
               ${
@@ -82,7 +95,7 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
                   <i className={option.icon} />
                 </span>
               ) : null}
-              <span>{option.label}</span>
+              <span>{label}</span>
             </p>
           </Button>
         );

@@ -9,6 +9,7 @@ import React, {
 } from "react";
 
 import { Question } from "@/types";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 // Defines the shape of the context's value
 interface OnboardingContextType {
@@ -39,10 +40,11 @@ export const OnboardingProvider = ({
 }: OnboardingProviderProps) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
+  const { language } = useLanguage();
 
   const currentQuestion = useMemo<Question | null>(() => {
     return questions[currentStep - 1] || null;
-  }, [currentStep, questions]);
+  }, [currentStep, questions, language]);
 
   const handleAnswerChange = (optionText: string) => {
     if (!currentQuestion) return;
