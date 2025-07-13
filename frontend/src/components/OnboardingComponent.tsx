@@ -8,7 +8,6 @@ import QuestionCard from "./Question";
 import { OptionsSelector } from "./Options";
 import { Button } from "./ui/button";
 import { QuestionHeader } from "./molecules/QuestionHeader";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { useRouter } from "next/navigation";
 import { submitAnswers } from "@/services/onboardingApi";
 
@@ -25,7 +24,6 @@ const OnboardingComponent = ({ questions }: Props) => {
     handleNext,
     answers,
   } = useOnboarding();
-  const { language } = useLanguage();
 
   console.log("answers: ", answers);
 
@@ -48,25 +46,21 @@ const OnboardingComponent = ({ questions }: Props) => {
     return;
   };
 
-  // Get translated fields with fallback
-  const t = (obj: Record<string, string> | undefined) =>
-    (obj && (obj[language] || obj["en"])) || "";
-
   return (
     <div className="px-4 pb-16 flex flex-col gap-4 relative">
       <QuestionHeader headingText={"Eekee"} />
       <CurStepIndicator curStep={currentStep} totalSteps={questions.length} />
       {currentStep === 1 ? (
-        <p className="font-medium">{t(onboardingText)}</p>
+        <p className="font-medium">{onboardingText.en}</p>
       ) : null}
       <QuestionCard
-        key={t(currentQuestion.questionTitle)}
-        questionTitle={t(currentQuestion.questionTitle)}
-        questionDesc={t(currentQuestion.description)}
+        key={currentQuestion.questionTitle.en}
+        questionTitle={currentQuestion.questionTitle.en}
+        questionDesc={currentQuestion.description.en}
       />
-      {currentQuestion.instruction && t(currentQuestion.instruction) && (
+      {currentQuestion.instruction && currentQuestion.instruction && (
         <p className="font-medium text-gray-600 text-center mb-2">
-          {t(currentQuestion.instruction)}
+          {currentQuestion.instruction.en}
         </p>
       )}
       <OptionsSelector
@@ -76,7 +70,6 @@ const OnboardingComponent = ({ questions }: Props) => {
         isMultiChoice={currentQuestion.isMultiChoice}
         maxSelections={currentQuestion.maxSelections || Infinity}
         onSelectionChange={handleAnswerChange}
-        language={language}
       />
 
       <Button

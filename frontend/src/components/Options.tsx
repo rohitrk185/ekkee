@@ -1,5 +1,5 @@
 import { Option } from "@/types";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "./ui/button";
 import { useOnboarding } from "@/contexts/onboardingContext";
@@ -10,7 +10,6 @@ interface OptionsSelectorProps {
   isMultiChoice: boolean;
   maxSelections?: number;
   onSelectionChange: (selectedOptions: string) => void;
-  language: string;
 }
 
 export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
@@ -19,17 +18,11 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
   isMultiChoice,
   maxSelections = Infinity, // Default to no limit if not provided
   onSelectionChange,
-  language,
 }) => {
   const { answers } = useOnboarding();
   const [selectedOptions, setSelectedOptions] = useState<string[]>(
     answers[`q_${questionId}`] || answers[questionId] || []
   );
-
-  // Reset selected options when language or options change
-  useEffect(() => {
-    setSelectedOptions([]);
-  }, [language]);
 
   // Determine if we should use a single column layout.
   // This happens if any option text is longer than a certain threshold (e.g., 15 characters).
@@ -39,9 +32,9 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
         typeof option.label === "object" && option.label !== null
           ? option.label
           : { en: typeof option.label === "string" ? option.label : "Unknown" };
-      return (labelObj[language] || labelObj["en"] || "").length > 20;
+      return (labelObj["en"] || "").length > 20;
     });
-  }, [options, language]);
+  }, [options]);
 
   const handleOptionClick = (option: string) => {
     let newSelection: string[];
@@ -78,7 +71,7 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
       }`}
     >
       {options.map((option) => {
-        const label = option.label[language] || option.label["en"];
+        const label = option.label["en"];
         const isSelected = selectedOptions.includes(label);
         return (
           <Button

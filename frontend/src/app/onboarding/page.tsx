@@ -1,10 +1,7 @@
-"use client";
-
 import OnboardingComponent from "@/components/OnboardingComponent";
 import { OnboardingProvider } from "@/contexts/onboardingContext";
 import { Option, Question } from "@/types";
 import React from "react";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 interface QuestionsData {
   id: string;
@@ -58,86 +55,12 @@ async function getOnboardingData() {
   }
 }
 
-const OnboardingPage = () => {
-  const { language } = useLanguage();
+const OnboardingPage = async () => {
   // Debug: Log the current language context value
-  const [questions, setQuestions] = React.useState<Question[]>([]);
-  const [fetchError, setFetchError] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    getOnboardingData()
-      .then((data: Question[]) => {
-        if (Array.isArray(data) && data.length > 0) {
-          const mapped: Question[] = data.map((question: Question) => ({
-            ...question,
-            questionTitle:
-              typeof question.questionTitle === "object" &&
-              question.questionTitle !== null
-                ? question.questionTitle
-                : {
-                    en:
-                      typeof question.questionTitle === "string"
-                        ? question.questionTitle
-                        : "",
-                  },
-            description:
-              typeof question.description === "object" &&
-              question.description !== null
-                ? question.description
-                : {
-                    en:
-                      typeof question.description === "string"
-                        ? question.description
-                        : "",
-                  },
-            instruction:
-              typeof question.instruction === "object" &&
-              question.instruction !== null
-                ? question.instruction
-                : {
-                    en:
-                      typeof question.instruction === "string"
-                        ? question.instruction
-                        : "",
-                  },
-            options: question.options.map((option: Option) => ({
-              label:
-                typeof option.label === "object" && option.label !== null
-                  ? option.label
-                  : {
-                      en:
-                        typeof option.label === "string"
-                          ? option.label
-                          : "Unknown",
-                    },
-              icon: option.icon,
-            })),
-          }));
-          setQuestions(mapped);
-          setFetchError(null);
-        } else {
-          setFetchError(
-            "Could not load onboarding questions. Please try again later."
-          );
-        }
-      })
-      .catch(() => {
-        setFetchError(
-          "Could not load onboarding questions. Please check your network or contact support."
-        );
-      });
-  }, [language]);
-
+  const questions = await getOnboardingData();
   return (
     <OnboardingProvider questions={questions}>
-      <div className="container">
-        {fetchError && (
-          <div className="bg-red-100 text-red-700 p-4 mb-4 rounded">
-            {fetchError}
-          </div>
-        )}
-        <OnboardingComponent questions={questions} />
-      </div>
+      <OnboardingComponent questions={questions} />
     </OnboardingProvider>
   );
 };
