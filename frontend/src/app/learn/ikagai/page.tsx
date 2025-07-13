@@ -21,7 +21,7 @@ export default function IkigaiDefinitionPage() {
 
   return (
     <div
-      className="w-[360px] h-[721px] flex flex-col items-center justify-start bg-white text-black p-6 max-w-md mx-auto relative cursor-pointer"
+      className="w-full min-h-screen flex flex-col items-center justify-start bg-white text-black p-6 mx-auto relative cursor-pointer"
       onClick={handleContainerClick}
     >
       {/* Top-right arrow button */}
@@ -52,7 +52,7 @@ export default function IkigaiDefinitionPage() {
       {/* [ik-ee-guy] noun */}
       <WordSeparator
         text="[ik-ee-guy] Japanese noun"
-        className="text-[14px] leading-[24px] text-center text-[#5D5D5D] mt-[18px]"
+        className="text-[14px] leading-[24px] text-center text-secondary mt-[18px]"
       />
 
       {/* Black container with definition */}
