@@ -3,6 +3,9 @@ from fastapi import Request
 from datetime import datetime
 from app.utils.firebase import db
 from app.schemas.answer_submission import AnswerSubmission
+from fastapi.responses import JSONResponse
+
+router = APIRouter()
 
 router = APIRouter()
 
@@ -31,18 +34,17 @@ def list_questions():
     return questions
 
 
-@router.get("/questions/{stepId}")
-def get_question_by_step(stepId: int):
-    questions_ref = db.collection("Questions").order_by("id")
-    docs = questions_ref.stream()
 
-    count = 0
+@router.get("/questions/{qId}")
+def get_question_by_step(qId: int):
+    questions_ref = db.collection("Questions")
+    query = questions_ref.where("order", "==", qId).limit(1)
+    docs = query.stream()
+
     for doc in docs:
-        count += 1
-        if count == stepId:
-            data = doc.to_dict()
-            data["id"] = doc.id
-            return data
+        data = doc.to_dict()
+        data["id"] = doc.id  # Attach Firestore document ID for frontend tracking
+        return data
 
     return JSONResponse(status_code=404, content={"message": "Question not found"})
 
