@@ -9,13 +9,14 @@ import { OptionsSelector } from "./Options";
 import { Button } from "./ui/button";
 import { QuestionHeader } from "./molecules/QuestionHeader";
 import { useRouter } from "next/navigation";
-
+import { submitAnswers } from "@/services/onboardingApi";
 
 type Props = {
   questions: Question[];
 };
 
 const OnboardingComponent = ({ questions }: Props) => {
+  const router = useRouter();
   const {
     currentQuestion,
     handleAnswerChange,
@@ -23,7 +24,6 @@ const OnboardingComponent = ({ questions }: Props) => {
     handleNext,
     answers,
   } = useOnboarding();
-  const router = useRouter();
 
   console.log(answers);
 
@@ -32,11 +32,12 @@ const OnboardingComponent = ({ questions }: Props) => {
   const onboardingText =
     "Our mission is to better understand you so we can help connect you with resources for a more purpose driven life";
 
-    const handleOnNext = () => {
+  const handleOnNext = () => {
     if (currentStep === questions.length) {
       // Call backend api to store options
+      submitAnswers(answers);
       // Route to success page
-      router.push('/onboarding-success');
+      router.push("/onboarding-success");
       return;
     }
 
@@ -53,10 +54,13 @@ const OnboardingComponent = ({ questions }: Props) => {
         <p className="font-medium">{onboardingText}</p>
       ) : null}
       <QuestionCard
+        key={currentQuestion.questionTitle}
         questionTitle={currentQuestion.questionTitle}
-        questionDesc={currentQuestion.desciption}
+        questionDesc={currentQuestion.description}
       />
       <OptionsSelector
+        key={currentQuestion.questionId}
+        questionId={currentQuestion.questionId}
         options={currentQuestion.options}
         isMultiChoice={currentQuestion.isMultiChoice}
         maxSelections={currentQuestion.maxSelections || Infinity}

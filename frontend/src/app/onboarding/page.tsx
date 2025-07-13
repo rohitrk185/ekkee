@@ -13,46 +13,16 @@ async function getOnboardingData() {
       {
         // This `next` object is used to configure caching behavior.
         // `revalidate` tells Next.js to regenerate the page at most once
-        // every 3600 seconds (1 hour) if new requests come in.
-        // This is Incremental Static Regeneration (ISR).
-        next: { revalidate: false },
+        next: { revalidate: 3600 },
       }
     );
 
     if (!response.ok) {
-      // If the API call fails, we throw an error to be caught below.
       throw new Error(`Failed to fetch data: ${response.statusText}`);
     }
 
     const data: unknown[] = await response.json();
-
-    // const questions: Question[] = [
-    //   {
-    //     questionId: 1,
-    //     questionTitle: "What is your primary role?",
-    //     desciption: "This helps us tailor your experience.",
-    //     options: [
-    //       "Developer",
-    //       "Designer",
-    //       "Manager",
-    //       "Role1",
-    //       "Role2",
-    //       "Role3",
-    //     ],
-    //     isSkippable: false,
-    //     isMultiChoice: true,
-    //     maxSelections: 3,
-    //   },
-    //   {
-    //     questionId: 2,
-    //     questionTitle: "Which technologies are you interested in?",
-    //     desciption: "Select all that apply.",
-    //     options: ["React", "Vue", "Node.js"],
-    //     isSkippable: true,
-    //     isMultiChoice: true,
-    //     maxSelections: 3,
-    //   },
-    // ];
+    console.log("data: ", data);
 
     const questions: Question[] = data.map((question: any) => ({
       // Map API fields to your frontend schema

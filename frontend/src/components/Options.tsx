@@ -1,9 +1,11 @@
 import { Option } from "@/types";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 import { Button } from "./ui/button";
+import { useOnboarding } from "@/contexts/onboardingContext";
 
 interface OptionsSelectorProps {
+  questionId: string;
   options: Option[];
   isMultiChoice: boolean;
   maxSelections?: number;
@@ -11,12 +13,16 @@ interface OptionsSelectorProps {
 }
 
 export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
+  questionId,
   options,
   isMultiChoice,
   maxSelections = Infinity, // Default to no limit if not provided
   onSelectionChange,
 }) => {
-  const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const { answers } = useOnboarding();
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(
+    answers[`q_${questionId}`] || answers[questionId] || []
+  );
 
   // Determine if we should use a single column layout.
   // This happens if any option text is longer than a certain threshold (e.g., 15 characters).
@@ -36,12 +42,11 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
         if (selectedOptions.length < maxSelections) {
           newSelection = [...selectedOptions, option];
         } else {
-          // Optional: Add a small visual cue or log that the limit is reached
           console.warn(`Maximum selections (${maxSelections}) reached.`);
           toast.warning(`Maximum selections (${maxSelections}) reached.`, {
             toastId: "maxSelections",
           });
-          return; // Do nothing if limit is reached
+          return;
         }
       }
     } else {

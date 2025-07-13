@@ -4,9 +4,9 @@ export interface Option {
 }
 
 export interface Question {
-  questionId: number;
+  questionId: string;
   questionTitle: string;
-  desciption: string;
+  description: string;
   options: Option[];
   isSkippable: boolean;
   isMultiChoice: boolean;

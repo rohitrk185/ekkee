@@ -6,6 +6,7 @@ import React, {
   useState,
   useMemo,
   ReactNode,
+  useCallback,
 } from "react";
 
 import { Question } from "@/types";
@@ -21,6 +22,7 @@ interface OnboardingContextType {
   handleAnswerChange: (optionText: string) => void;
   handleNext: () => void;
   handleBack: () => void;
+  clearCurrentAnswer: () => void;
   //   resetOnboarding: () => void;
 }
 
@@ -76,6 +78,11 @@ export const OnboardingProvider = ({
   //     setAnswers({});
   //   };
 
+  const clearCurrentAnswer = useCallback(() => {
+    const questionKey = `q_${currentQuestion?.questionId}`;
+    setAnswers((prev) => ({ ...prev, [questionKey]: [] }));
+  }, [currentQuestion?.questionId]);
+
   const value: OnboardingContextType = {
     currentStep,
     answers,
@@ -86,6 +93,7 @@ export const OnboardingProvider = ({
     handleAnswerChange,
     handleNext,
     handleBack,
+    clearCurrentAnswer,
     // resetOnboarding,
   };
 
