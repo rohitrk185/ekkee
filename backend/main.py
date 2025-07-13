@@ -1,8 +1,9 @@
 from fastapi import FastAPI
+from app.api.v1.example import router as example_router
 
 app = FastAPI()
 
-# Routers will be included here
+app.include_router(example_router, prefix="/api/v1")
 
 @app.get("/")
 def read_root():
