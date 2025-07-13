@@ -28,7 +28,10 @@ export async function submitCurQuestionSelection(
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ selections, submissionDocId }),
+      body: JSON.stringify({
+        selections,
+        submissionDocId: submissionDocId || null,
+      }),
     }
   );
   const data = await response.json();
