@@ -48,6 +48,28 @@ def get_question_by_step(qId: int):
 
     return JSONResponse(status_code=404, content={"message": "Question not found"})
 
+@router.post("/submit/{order_id}")
+async def submit_answers(order_id: int, payload: AnswerSubmission, request: Request):
+    try:
+        doc_ref = db.collection("responses").document("all_responses")
+
+        new_entry = {
+            "order": order_id,
+            "answers": payload.answers,
+            "submittedAt": datetime.utcnow().isoformat(),
+            "clientIp": request.client.host
+        }
+
+        # Atomically append the new entry to the 'responses' array
+        doc_ref.set({
+            "responses": firestore.ArrayUnion([new_entry])
+        }, merge=True)
+
+        return {"message": f"Answer for order {order_id} submitted successfully."}
+    except Exception as e:
+        print(f"Error submitting response for order {order_id}: {e}")
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
 
 
 
