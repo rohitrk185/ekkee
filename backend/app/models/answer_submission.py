@@ -1,5 +1,7 @@
 from pydantic import BaseModel
-from typing import Dict, Any
+from typing import Any, Union, List
 
 class AnswerSubmission(BaseModel):
-    answers: Dict[str, Any]
+    submissionDocId: str
+    question_id: str
+    selection: List[str]
