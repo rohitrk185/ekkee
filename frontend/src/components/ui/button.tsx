@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "default" | "outline";
+  variant?: "default" | "outline" | "ghost";
 }
 
 export const Button = ({
@@ -16,6 +16,7 @@ export const Button = ({
         variant === "default" && "bg-black hover:bg-gray-800",
         variant === "outline" &&
           "border border-black text-black hover:bg-gray-100",
+        variant === "ghost" && "hover:bg-accent hover:text-accent-foreground",
         className
       )}
       {...props}
