@@ -18,7 +18,7 @@ def test_firebase():
 
 @router.get("/questions")
 def list_questions():
-    questions_ref = db.collection("Questions")
+    questions_ref = db.collection("Questions").order_by("id")
     docs = questions_ref.stream()
     questions = []
     for doc in docs:
