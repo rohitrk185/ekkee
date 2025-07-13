@@ -2,6 +2,7 @@
   "Questions": [
     {
       "id": 1,
+      "doc_id": "age",
       "type": "single_choice",
       "text": "What is your age?",
       "canSkip": true,
@@ -18,6 +19,7 @@
     },
     {
       "id": 2,
+      "doc_id": "gender",
       "type": "single_choice",
       "text": "How do you identify?",
       "canSkip": true,
@@ -32,6 +34,7 @@
     },
     {
       "id": 3,
+      "doc_id": "occupation",
       "type": "single_choice",
       "text": "What is your primary occupation?",
       "canSkip": true,
@@ -48,6 +51,7 @@
     },
     {
       "id": 4,
+      "doc_id": "hobbies",
       "type": "multi_choice",
       "text": "What are your favorite hobbies?",
       "canSkip": true,
@@ -78,6 +82,7 @@
     },
     {
       "id": 5,
+      "doc_id": "free_day",
       "type": "multi_choice",
       "text": "If you had a free day, what would you do?",
       "canSkip": true,
@@ -103,6 +108,7 @@
     },
     {
       "id": 6,
+      "doc_id": "skills",
       "type": "multi_choice",
       "text": "Which of these skills do you excel at?",
       "canSkip": true,
@@ -120,6 +126,7 @@
     },
     {
       "id": 7,
+      "doc_id": "feedback",
       "type": "multi_choice",
       "text": "Which feedback do you often receive from others?",
       "canSkip": true,
@@ -136,6 +143,7 @@
     },
     {
       "id": 8,
+      "doc_id": "struggles",
       "type": "multi_choice",
       "text": "What are you struggling with most right now?",
       "canSkip": true,
@@ -152,6 +160,7 @@
     },
     {
       "id": 9,
+      "doc_id": "work_preference",
       "type": "single_choice",
       "text": "Would you rather work for…?",
       "canSkip": true,
@@ -170,6 +179,7 @@
     },
     {
       "id": 10,
+      "doc_id": "goals",
       "type": "multi_choice",
       "text": "What do you hope to get out of this experience?",
       "canSkip": true,

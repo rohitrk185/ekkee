@@ -3,7 +3,7 @@ import os
 from firebase import db
 
 # Load Questions from JSON file
-QUESTIONS_JSON_PATH ="D:\\ekkee\\Questions.json"
+QUESTIONS_JSON_PATH = "D:\ekkee\Questions.json"
 
 with open(QUESTIONS_JSON_PATH, 'r', encoding='utf-8') as f:
     data = json.load(f)
@@ -11,7 +11,9 @@ with open(QUESTIONS_JSON_PATH, 'r', encoding='utf-8') as f:
 
 # Upload each question as a document in the 'Questions' collection
 for question in questions:
-    doc_id = str(question["id"])
+    # Ensure 'id' is stored as a number
+    question["id"] = int(question["id"])
+    doc_id = question.get("doc_id", str(question["id"]))
     db.collection("Questions").document(doc_id).set(question)
     print(f"Uploaded question {doc_id}")
 
