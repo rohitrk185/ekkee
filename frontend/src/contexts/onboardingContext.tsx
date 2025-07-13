@@ -44,6 +44,8 @@ export const OnboardingProvider = ({
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
   const { language } = useLanguage();
 
+  console.log("questions: ", questions);
+
   const currentQuestion = useMemo<Question | null>(() => {
     return questions[currentStep - 1] || null;
   }, [currentStep, questions, language]);

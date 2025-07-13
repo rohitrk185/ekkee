@@ -25,15 +25,9 @@ const OnboardingComponent = ({ questions }: Props) => {
     handleNext,
     answers,
   } = useOnboarding();
-<<<<<<< HEAD
-=======
   const { language } = useLanguage();
-  const router = useRouter();
->>>>>>> f5890edf7db35f9ba8a7b7ff0e9f4a75136875d0
 
-  // Debug: Log language and questions whenever component renders
-  console.log('Current language:', language);
-  console.log('Questions prop:', questions);
+  console.log("answers: ", answers);
 
   if (!currentQuestion) return null;
 
@@ -66,17 +60,14 @@ const OnboardingComponent = ({ questions }: Props) => {
         <p className="font-medium">{t(onboardingText)}</p>
       ) : null}
       <QuestionCard
-<<<<<<< HEAD
-        key={currentQuestion.questionTitle}
-        questionTitle={currentQuestion.questionTitle}
-        questionDesc={currentQuestion.description}
-=======
+        key={t(currentQuestion.questionTitle)}
         questionTitle={t(currentQuestion.questionTitle)}
-        questionDesc={t(currentQuestion.desciption)}
->>>>>>> f5890edf7db35f9ba8a7b7ff0e9f4a75136875d0
+        questionDesc={t(currentQuestion.description)}
       />
       {currentQuestion.instruction && t(currentQuestion.instruction) && (
-        <p className="font-medium text-gray-600 text-center mb-2">{t(currentQuestion.instruction)}</p>
+        <p className="font-medium text-gray-600 text-center mb-2">
+          {t(currentQuestion.instruction)}
+        </p>
       )}
       <OptionsSelector
         key={currentQuestion.questionId}
@@ -87,6 +78,7 @@ const OnboardingComponent = ({ questions }: Props) => {
         onSelectionChange={handleAnswerChange}
         language={language}
       />
+
       <Button
         variant="default"
         onClick={handleOnNext}

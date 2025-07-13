@@ -28,9 +28,8 @@ async function getOnboardingData() {
       // Map API fields to your frontend schema
       questionId: question.id,
       questionTitle: question.text,
-      desciption: question.desciption || "", // Provide desciption, fallback to empty string if missing
+      description: question.instruction || "", // Provide description, fallback to empty string if missing
       isSkippable: question.canSkip,
-      description: question.instruction,
       // Convert the array of objects to an array of strings
       options: question.options.map((option: Option) => option),
       // Determine isMultiChoice based on the 'type' field
@@ -50,7 +49,6 @@ async function getOnboardingData() {
 const OnboardingPage = () => {
   const { language } = useLanguage();
   // Debug: Log the current language context value
-  console.log("Language context in onboarding/page:", language);
   const [questions, setQuestions] = React.useState<Question[]>([]);
   const [fetchError, setFetchError] = React.useState<string | null>(null);
 
@@ -58,7 +56,7 @@ const OnboardingPage = () => {
     getOnboardingData()
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
-          const mapped = data.map((question: any) => ({
+          const mapped: Question[] = data.map((question: any) => ({
             questionId: question.id,
             questionTitle:
               typeof question.text === "object" && question.text !== null
@@ -66,14 +64,14 @@ const OnboardingPage = () => {
                 : {
                     en: typeof question.text === "string" ? question.text : "",
                   },
-            desciption:
-              typeof question.desciption === "object" &&
-              question.desciption !== null
-                ? question.desciption
+            description:
+              typeof question.description === "object" &&
+              question.description !== null
+                ? question.description
                 : {
                     en:
-                      typeof question.desciption === "string"
-                        ? question.desciption
+                      typeof question.description === "string"
+                        ? question.description
                         : "",
                   },
             instruction:
