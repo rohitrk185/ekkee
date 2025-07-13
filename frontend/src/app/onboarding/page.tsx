@@ -62,7 +62,7 @@ async function getOnboardingData() {
       questionTitle: question.text,
       desciption: question.desciption || "", // Provide desciption, fallback to empty string if missing
       isSkippable: question.canSkip,
-      desciption: question.instruction,
+      description: question.instruction,
       // Convert the array of objects to an array of strings
       options: question.options.map((option: Option) => option),
       // Determine isMultiChoice based on the 'type' field
