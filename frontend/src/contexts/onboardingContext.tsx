@@ -23,6 +23,9 @@ interface OnboardingContextType {
   handleNext: () => void;
   handleBack: () => void;
   clearCurrentAnswer: () => void;
+  storeQuestionData: (questionData: Question[]) => void;
+  submissionDocId: string | undefined;
+  setSubmissionDocId: React.Dispatch<React.SetStateAction<string | undefined>>;
   //   resetOnboarding: () => void;
 }
 
@@ -31,16 +34,18 @@ const OnboardingContext = createContext<OnboardingContextType | null>(null);
 
 // --- PROVIDER COMPONENT ---
 interface OnboardingProviderProps {
-  questions: Question[];
+  questionsList: Question[];
   children: ReactNode;
 }
 
 export const OnboardingProvider = ({
-  questions,
+  questionsList,
   children,
 }: OnboardingProviderProps) => {
+  const [questions, setQuestions] = useState(questionsList);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
+  const [submissionDocId, setSubmissionDocId] = useState<string>();
 
   const currentQuestion = useMemo<Question | null>(() => {
     return questions[currentStep - 1] || null;
@@ -83,6 +88,18 @@ export const OnboardingProvider = ({
     setAnswers((prev) => ({ ...prev, [questionKey]: [] }));
   }, [currentQuestion?.questionId]);
 
+  const storeQuestionData = (questionData: Question[]) => {
+    setQuestions((prevQuestions: Question[]) => {
+      const existingQuestionIds = new Set(
+        prevQuestions.map((q: Question) => q.questionId)
+      );
+      const newQuestions = questionData.filter(
+        (q) => !existingQuestionIds.has(q.questionId)
+      );
+      return [...prevQuestions, ...newQuestions];
+    });
+  };
+
   const value: OnboardingContextType = {
     currentStep,
     answers,
@@ -94,6 +111,9 @@ export const OnboardingProvider = ({
     handleNext,
     handleBack,
     clearCurrentAnswer,
+    storeQuestionData,
+    submissionDocId,
+    setSubmissionDocId,
     // resetOnboarding,
   };
 

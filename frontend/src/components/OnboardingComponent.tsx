@@ -2,14 +2,14 @@
 
 import { useOnboarding } from "@/contexts/onboardingContext";
 import { Question } from "@/types";
-import React from "react";
+import React, { useState } from "react";
 import CurStepIndicator from "./curStepIndicator";
 import QuestionCard from "./Question";
 import { OptionsSelector } from "./Options";
 import { Button } from "./ui/button";
 import { QuestionHeader } from "./molecules/QuestionHeader";
 import { useRouter } from "next/navigation";
-import { submitAnswers } from "@/services/onboardingApi";
+import { submitCurQuestionSelection } from "@/services/onboardingApi";
 import { toast } from "react-toastify";
 
 type Props = {
@@ -24,9 +24,17 @@ const OnboardingComponent = ({ questions }: Props) => {
     currentStep,
     handleNext,
     answers,
+    storeQuestionData,
+    submissionDocId,
+    setSubmissionDocId,
   } = useOnboarding();
 
-  console.log("answers: ", answers);
+  const questionID = currentQuestion?.questionId || "";
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState<string[]>(
+    answers[`q_${questionID}`] || answers[questionID] || []
+  );
 
   if (!currentQuestion) return null;
 
@@ -35,22 +43,45 @@ const OnboardingComponent = ({ questions }: Props) => {
     es: "Nuestra misión es comprenderte mejor para poder ayudarte a conectar con recursos para una vida más orientada al propósito",
   };
 
-  const handleOnNext = () => {
-    if (currentStep === questions.length) {
-      // Call backend api to store options
-      try {
-        submitAnswers(answers);
-      } catch (error) {
-        toast.error("Unable to complete your onboarding. Please try again", {
-          toastId: "onboardingError",
-        });
+  const handleOnNext = async () => {
+    try {
+      setIsSubmitting(true);
+      // if (currentStep === questions.length) {
+      //   // Call backend api to store options
+      //   submitAnswers(answers);
+      //   // Route to success page
+      //   router.push("/onboarding-success");
+      //   return;
+      // }
+      const { next_question: nextQuestionData, submissionDocumentId } =
+        await submitCurQuestionSelection(
+          currentQuestion.order,
+          currentQuestion.questionId,
+          selectedOptions,
+          submissionDocId
+        );
+      // We should now save this data in questions state of context
+      // if the question already exists in questions state of context, we should skip it
+      storeQuestionData(nextQuestionData);
+      setSubmissionDocId(submissionDocumentId);
+
+      if (currentStep === questions.length) {
+        // Route to success page
+        router.push("/onboarding-success");
+        setSubmissionDocId(undefined);
+        return;
       }
-      // Route to success page
-      router.push("/onboarding-success");
+
+      handleNext();
       return;
+    } catch (error) {
+      console.error("Error submitting answers:", error);
+      toast.error("Unable to complete your onboarding. Please try again", {
+        toastId: "onboardingError",
+      });
+    } finally {
+      setIsSubmitting(false);
     }
-    handleNext();
-    return;
   };
 
   return (
@@ -77,13 +108,16 @@ const OnboardingComponent = ({ questions }: Props) => {
         isMultiChoice={currentQuestion.isMultiChoice}
         maxSelections={currentQuestion.maxSelections || Infinity}
         onSelectionChange={handleAnswerChange}
+        selectedOptions={selectedOptions}
+        setSelectedOptions={setSelectedOptions}
       />
 
       <Button
         variant="default"
         onClick={handleOnNext}
         type="button"
-        className="mt-10 px-16 max-w-max mx-auto bottom-0"
+        disabled={isSubmitting}
+        className="mt-10 px-16 max-w-max mx-auto bottom-0 disabled:opacity-50"
       >
         Next
       </Button>

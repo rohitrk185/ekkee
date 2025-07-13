@@ -1,8 +1,7 @@
 import { Option } from "@/types";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { toast } from "react-toastify";
 import { Button } from "./ui/button";
-import { useOnboarding } from "@/contexts/onboardingContext";
 
 interface OptionsSelectorProps {
   questionId: string;
@@ -10,20 +9,18 @@ interface OptionsSelectorProps {
   isMultiChoice: boolean;
   maxSelections?: number;
   onSelectionChange: (selectedOptions: string) => void;
+  selectedOptions: string[];
+  setSelectedOptions: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
-  questionId,
   options,
   isMultiChoice,
   maxSelections = Infinity, // Default to no limit if not provided
   onSelectionChange,
+  selectedOptions,
+  setSelectedOptions,
 }) => {
-  const { answers } = useOnboarding();
-  const [selectedOptions, setSelectedOptions] = useState<string[]>(
-    answers[`q_${questionId}`] || answers[questionId] || []
-  );
-
   // Determine if we should use a single column layout.
   // This happens if any option text is longer than a certain threshold (e.g., 15 characters).
   const useSingleColumn = useMemo(() => {

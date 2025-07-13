@@ -12,4 +12,5 @@ export interface Question {
   isSkippable: boolean;
   isMultiChoice: boolean;
   maxSelections?: number;
+  order: number;
 }
