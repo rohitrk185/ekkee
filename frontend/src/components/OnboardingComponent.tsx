@@ -8,6 +8,8 @@ import QuestionCard from "./Question";
 import { OptionsSelector } from "./Options";
 import { Button } from "./ui/button";
 import { QuestionHeader } from "./molecules/QuestionHeader";
+import { useRouter } from "next/navigation";
+
 
 type Props = {
   questions: Question[];
@@ -21,6 +23,7 @@ const OnboardingComponent = ({ questions }: Props) => {
     handleNext,
     answers,
   } = useOnboarding();
+  const router = useRouter();
 
   console.log(answers);
 
@@ -29,10 +32,11 @@ const OnboardingComponent = ({ questions }: Props) => {
   const onboardingText =
     "Our mission is to better understand you so we can help connect you with resources for a more purpose driven life";
 
-  const handleOnNext = () => {
+    const handleOnNext = () => {
     if (currentStep === questions.length) {
       // Call backend api to store options
       // Route to success page
+      router.push('/onboarding-success');
       return;
     }
 
