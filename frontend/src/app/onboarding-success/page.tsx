@@ -42,7 +42,7 @@ export default function OnboardingSuccess() {
               "https://creator.voiceflow.com/prototype/6845655701606e704f0ea542"
             )
           }
-          className="flex justify-center items-center bg-primary text-background rounded-md mt-4 px-6 py-3"
+          className="flex justify-center items-center min-w-[264px] max-w-[480px] bg-primary text-background rounded-md mt-4 px-4 py-3"
         >
           <MessageSquare className="w-4 h-4 mr-2" />
           Chat
