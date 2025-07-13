@@ -15,3 +15,14 @@ def test_firebase():
     # Read it back
     doc = doc_ref.get()
     return doc.to_dict()
+
+@router.get("/questions")
+def list_questions():
+    questions_ref = db.collection("questions")
+    docs = questions_ref.stream()
+    questions = []
+    for doc in docs:
+        data = doc.to_dict()
+        data["id"] = doc.id  # include document ID
+        questions.append(data)
+    return questions
