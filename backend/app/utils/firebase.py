@@ -3,7 +3,7 @@ from firebase_admin import credentials, firestore
 import os
 
 # Path to your service account key
-CRED_PATH = "D:\\ekkee\\backend\\credentials.json";
+CRED_PATH = "/etc/secrets/credentials.json"
 
 if not firebase_admin._apps:
     cred = credentials.Certificate(CRED_PATH)
