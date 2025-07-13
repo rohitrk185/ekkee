@@ -13,7 +13,7 @@ export default function WelcomePage() {
   };
 
   return (
-    <div className="w-[360px] h-[721px] flex flex-col bg-black text-white p-6 max-w-md mx-auto">
+    <div className="w-full h-screen flex flex-col bg-black text-white p-6  mx-auto">
       {/* Top pinned header */}
       <div className="w-[16.4%] mb-4">
         <h1 className="w-full flex items-center justify-start text-lg font-semibold">
