@@ -23,6 +23,8 @@ async function getOnboardingData() {
 
 const OnboardingPage = () => {
   const { language } = useLanguage();
+  // Debug: Log the current language context value
+  console.log('Language context in onboarding/page:', language);
   const [questions, setQuestions] = React.useState<Question[]>([]);
   const [fetchError, setFetchError] = React.useState<string | null>(null);
 

@@ -68,9 +68,5 @@ function WelcomeContent() {
 }
 
 export default function WelcomePage() {
-  return (
-    <LanguageProvider>
-      <WelcomeContent />
-    </LanguageProvider>
-  );
+  return <WelcomeContent />;
 }
