@@ -1,8 +1,10 @@
+import { Option } from "@/types";
 import { useMemo, useState } from "react";
 import { toast } from "react-toastify";
+import { Button } from "./ui/button";
 
 interface OptionsSelectorProps {
-  options: string[];
+  options: Option[];
   isMultiChoice: boolean;
   maxSelections?: number;
   onSelectionChange: (selectedOptions: string) => void;
@@ -19,7 +21,7 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
   // Determine if we should use a single column layout.
   // This happens if any option text is longer than a certain threshold (e.g., 15 characters).
   const useSingleColumn = useMemo(() => {
-    return options.some((option) => option.length > 15);
+    return options.some((option) => option.label.length > 20);
   }, [options]);
 
   const handleOptionClick = (option: string) => {
@@ -36,7 +38,9 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
         } else {
           // Optional: Add a small visual cue or log that the limit is reached
           console.warn(`Maximum selections (${maxSelections}) reached.`);
-          toast.warning(`Maximum selections (${maxSelections}) reached.`);
+          toast.warning(`Maximum selections (${maxSelections}) reached.`, {
+            toastId: "maxSelections",
+          });
           return; // Do nothing if limit is reached
         }
       }
@@ -51,19 +55,20 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
 
   return (
     <div
-      className={`grid gap-3 transition-all duration-300 mt-4 ${
+      className={`grid gap-4 transition-all duration-300 mt-4 ${
         useSingleColumn ? "grid-cols-1" : "grid-cols-2"
       }`}
     >
       {options.map((option) => {
-        const isSelected = selectedOptions.includes(option);
+        const isSelected = selectedOptions.includes(option.label);
         return (
-          <button
-            key={option}
-            onClick={() => handleOptionClick(option)}
+          <Button
+            type="button"
+            variant="outline"
+            key={option.label}
+            onClick={() => handleOptionClick(option.label)}
             className={`
-              w-full text-center font-medium py-3 px-4 rounded-lg border transition-all duration-200
-              focus:outline-none text-black
+              w-full font-medium py-3 px-4 rounded-lg border transition-all duration-200 focus:outline-none text-black flex justify-center items-center
               ${
                 isSelected
                   ? " border-black border-2"
@@ -71,8 +76,15 @@ export const OptionsSelector: React.FC<OptionsSelectorProps> = ({
               }
             `}
           >
-            {option}
-          </button>
+            <p className="flex gap-x-2 items-center justify-center">
+              {option.icon ? (
+                <span>
+                  <i className={option.icon} />
+                </span>
+              ) : null}
+              <span>{option.label}</span>
+            </p>
+          </Button>
         );
       })}
     </div>

@@ -37,7 +37,6 @@ export const OnboardingProvider = ({
   questions,
   children,
 }: OnboardingProviderProps) => {
-  console.log("questions: ", questions);
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
 

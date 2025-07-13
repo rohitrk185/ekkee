@@ -1,6 +1,6 @@
 import OnboardingComponent from "@/components/OnboardingComponent";
 import { OnboardingProvider } from "@/contexts/onboardingContext";
-import { Question } from "@/types";
+import { Option, Question } from "@/types";
 import React from "react";
 
 // Implement SSG and pass it to the component below
@@ -57,23 +57,21 @@ async function getOnboardingData() {
     //   },
     // ];
 
-    const questions = data.map((question: any) => ({
+    const questions: Question[] = data.map((question: any) => ({
       // Map API fields to your frontend schema
       questionId: question.id,
       questionTitle: question.text,
       isSkippable: question.canSkip,
-
+      desciption: question.instruction,
       // Convert the array of objects to an array of strings
-      options: question.options.map(
-        (option: { label: string }) => option.label
-      ),
-
+      options: question.options.map((option: Option) => option),
       // Determine isMultiChoice based on the 'type' field
       isMultiChoice: question.type === "multi_choice",
 
       // Carry over maxSelections if it exists
       maxSelections: question.maxSelections || Infinity,
     }));
+
     return questions;
   } catch (error) {
     console.error("Could not fetch onboarding questions:", error);
@@ -85,7 +83,6 @@ async function getOnboardingData() {
 
 const page = async () => {
   const questions = await getOnboardingData();
-  console.log("questions: ", questions);
   return (
     <OnboardingProvider questions={questions}>
       <div className="container">
