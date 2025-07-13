@@ -35,8 +35,8 @@ export default function IkigaiDefinitionPage() {
 
       {/* 生きがい - Japanese text */}
       <h1
-        className="font-[700] text-[50px] leading-[24px] text-center mt-[233px]"
-        style={{ fontFamily: "Shippori Mincho B1, serif" }}
+        className="font-shippori text-3xl text-[50px] leading-[24px] text-center mt-[233px]"
+        // style={{ fontFamily: "Shippori Mincho B1, serif" }}
       >
         生きがい
       </h1>
@@ -46,7 +46,7 @@ export default function IkigaiDefinitionPage() {
         className="font-[600] text-[40px] leading-[24px] text-center mt-[50px]"
         style={{ fontFamily: "Shippori Mincho B1, serif" }}
       >
-        Ikigai
+        Ikagai
       </h2>
 
       {/* [ik-ee-guy] noun */}
