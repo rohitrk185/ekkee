@@ -4,196 +4,256 @@
       "id": 1,
       "doc_id": "age",
       "type": "single_choice",
-      "text": "What is your age?",
+      "text": {
+        "en": "What is your age?",
+        "es": "¿Cuál es tu edad?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "Under 18" },
-        { "label": "18-24" },
-        { "label": "25-35" },
-        { "label": "36-45" },
-        { "label": "46-55" },
-        { "label": "55+" }
+        { "label": { "en": "Under 18", "es": "Menos de 18" } },
+        { "label": { "en": "18-24", "es": "18-24" } },
+        { "label": { "en": "25-35", "es": "25-35" } },
+        { "label": { "en": "36-45", "es": "36-45" } },
+        { "label": { "en": "46-55", "es": "46-55" } },
+        { "label": { "en": "55+", "es": "55+" } }
       ],
-      "instruction": "Select one option.",
+      "instruction": {
+        "en": "Select one option.",
+        "es": "Selecciona una opción."
+      },
       "maxSelections": 1
     },
     {
       "id": 2,
       "doc_id": "gender",
       "type": "single_choice",
-      "text": "How do you identify?",
+      "text": {
+        "en": "How do you identify?",
+        "es": "¿Cómo te identificas?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "Male" },
-        { "label": "Female" },
-        { "label": "Non-binary" },
-        { "label": "Prefer not to say" }
+        { "label": { "en": "Male", "es": "Masculino" } },
+        { "label": { "en": "Female", "es": "Femenino" } },
+        { "label": { "en": "Non-binary", "es": "No binario" } },
+        { "label": { "en": "Prefer not to say", "es": "Prefiero no decirlo" } }
       ],
-      "instruction": "Select one option.",
+      "instruction": {
+        "en": "Select one option.",
+        "es": "Selecciona una opción."
+      },
       "maxSelections": 1
     },
     {
       "id": 3,
       "doc_id": "occupation",
       "type": "single_choice",
-      "text": "What is your primary occupation?",
+      "text": {
+        "en": "What is your primary occupation?",
+        "es": "¿Cuál es tu ocupación principal?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "Student" },
-        { "label": "Professional" },
-        { "label": "Homemaker" },
-        { "label": "Retired" },
-        { "label": "Unemployed" },
-        { "label": "Prefer not to say" }
+        { "label": { "en": "Student", "es": "Estudiante" } },
+        { "label": { "en": "Professional", "es": "Profesional" } },
+        { "label": { "en": "Homemaker", "es": "Ama de casa" } },
+        { "label": { "en": "Retired", "es": "Jubilado/a" } },
+        { "label": { "en": "Unemployed", "es": "Desempleado/a" } },
+        { "label": { "en": "Prefer not to say", "es": "Prefiero no decirlo" } }
       ],
-      "instruction": "Select one option.",
+      "instruction": {
+        "en": "Select one option.",
+        "es": "Selecciona una opción."
+      },
       "maxSelections": 1
     },
     {
       "id": 4,
       "doc_id": "hobbies",
       "type": "multi_choice",
-      "text": "What are your favorite hobbies?",
+      "text": {
+        "en": "What are your favorite hobbies?",
+        "es": "¿Cuáles son tus pasatiempos favoritos?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "Reading", "icon": "fas fa-book" },
-        { "label": "Writing", "icon": "fas fa-pen" },
-        { "label": "Drawing/Painting", "icon": "fas fa-paint-brush" },
-        { "label": "Playing music", "icon": "fas fa-music" },
-        { "label": "Dancing", "icon": "fas fa-music" },
-        { "label": "Coding", "icon": "fas fa-code" },
-        { "label": "Hiking", "icon": "fas fa-hiking" },
-        { "label": "Traveling", "icon": "fas fa-plane" },
-        { "label": "Cooking/Baking", "icon": "fas fa-utensils" },
-        { "label": "Gaming", "icon": "fas fa-gamepad" },
-        { "label": "Yoga/Fitness", "icon": "fas fa-dumbbell" },
-        { "label": "Meditation", "icon": "fas fa-spa" },
-        { "label": "Volunteering", "icon": "fas fa-hands-helping" },
-        { "label": "Gardening", "icon": "fas fa-seedling" },
-        { "label": "Photography", "icon": "fas fa-camera" },
-        { "label": "DIY/Building stuff", "icon": "fas fa-tools" },
-        { "label": "Watching documentaries", "icon": "fas fa-film" },
-        { "label": "Making videos or content", "icon": "fas fa-video" },
-        { "label": "Sports/Playing team games", "icon": "fas fa-basketball-ball" },
-        { "label": "Learning languages", "icon": "fas fa-language" }
+        { "label": { "en": "Reading", "es": "Lectura" }, "icon": "fas fa-book" },
+        { "label": { "en": "Writing", "es": "Escritura" }, "icon": "fas fa-pen" },
+        { "label": { "en": "Drawing/Painting", "es": "Dibujo/Pintura" }, "icon": "fas fa-paint-brush" },
+        { "label": { "en": "Playing music", "es": "Tocar música" }, "icon": "fas fa-music" },
+        { "label": { "en": "Dancing", "es": "Bailar" }, "icon": "fas fa-music" },
+        { "label": { "en": "Coding", "es": "Programar" }, "icon": "fas fa-code" },
+        { "label": { "en": "Hiking", "es": "Senderismo" }, "icon": "fas fa-hiking" },
+        { "label": { "en": "Traveling", "es": "Viajar" }, "icon": "fas fa-plane" },
+        { "label": { "en": "Cooking/Baking", "es": "Cocinar/Hornear" }, "icon": "fas fa-utensils" },
+        { "label": { "en": "Gaming", "es": "Jugar videojuegos" }, "icon": "fas fa-gamepad" },
+        { "label": { "en": "Yoga/Fitness", "es": "Yoga/Fitness" }, "icon": "fas fa-dumbbell" },
+        { "label": { "en": "Meditation", "es": "Meditación" }, "icon": "fas fa-spa" },
+        { "label": { "en": "Volunteering", "es": "Voluntariado" }, "icon": "fas fa-hands-helping" },
+        { "label": { "en": "Gardening", "es": "Jardinería" }, "icon": "fas fa-seedling" },
+        { "label": { "en": "Photography", "es": "Fotografía" }, "icon": "fas fa-camera" },
+        { "label": { "en": "DIY/Building stuff", "es": "Bricolaje/Construir cosas" }, "icon": "fas fa-tools" },
+        { "label": { "en": "Watching documentaries", "es": "Ver documentales" }, "icon": "fas fa-film" },
+        { "label": { "en": "Making videos or content", "es": "Crear videos o contenido" }, "icon": "fas fa-video" },
+        { "label": { "en": "Sports/Playing team games", "es": "Deportes/Jugar en equipo" }, "icon": "fas fa-basketball-ball" },
+        { "label": { "en": "Learning languages", "es": "Aprender idiomas" }, "icon": "fas fa-language" }
       ],
-      "instruction": "Select the ones that bring you joy.",
+      "instruction": {
+        "en": "Select the ones that bring you joy.",
+        "es": "Selecciona los que te traen alegría."
+      },
       "maxSelections": 5
     },
     {
       "id": 5,
       "doc_id": "free_day",
       "type": "multi_choice",
-      "text": "If you had a free day, what would you do?",
+      "text": {
+        "en": "If you had a free day, what would you do?",
+        "es": "Si tuvieras un día libre, ¿qué harías?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "Go on a hike or explore nature", "icon": "fas fa-hiking" },
-        { "label": "Watch movies or binge a series", "icon": "fas fa-film" },
-        { "label": "Read a book or listen to a podcast", "icon": "fas fa-headphones" },
-        { "label": "Create something (write, paint, code, etc.)", "icon": "fas fa-paint-brush" },
-        { "label": "Hang out with close friends or family", "icon": "fas fa-users" },
-        { "label": "Work on a personal side project", "icon": "fas fa-lightbulb" },
-        { "label": "Try something new (class, hobby, activity)", "icon": "fas fa-flask" },
-        { "label": "Sleep in and fully recharge", "icon": "fas fa-bed" },
-        { "label": "Exercise, go to the gym, or take a yoga class", "icon": "fas fa-dumbbell" },
-        { "label": "Volunteer or help someone", "icon": "fas fa-hands-helping" },
-        { "label": "Deep clean, declutter, or organize", "icon": "fas fa-broom" },
-        { "label": "Wander a new neighborhood or travel locally", "icon": "fas fa-map-marked-alt" },
-        { "label": "Cook a new recipe or bake", "icon": "fas fa-utensils" },
-        { "label": "Reflect or journal", "icon": "fas fa-book" },
-        { "label": "Learn a new skill online", "icon": "fas fa-laptop" }
+        { "label": { "en": "Go on a hike or explore nature", "es": "Ir de excursión o explorar la naturaleza" }, "icon": "fas fa-hiking" },
+        { "label": { "en": "Watch movies or binge a series", "es": "Ver películas o maratonear una serie" }, "icon": "fas fa-film" },
+        { "label": { "en": "Read a book or listen to a podcast", "es": "Leer un libro o escuchar un pódcast" }, "icon": "fas fa-headphones" },
+        { "label": { "en": "Create something (write, paint, code, etc.)", "es": "Crear algo (escribir, pintar, programar, etc.)" }, "icon": "fas fa-paint-brush" },
+        { "label": { "en": "Hang out with close friends or family", "es": "Pasar tiempo con amigos cercanos o familia" }, "icon": "fas fa-users" },
+        { "label": { "en": "Work on a personal side project", "es": "Trabajar en un proyecto personal" }, "icon": "fas fa-lightbulb" },
+        { "label": { "en": "Try something new (class, hobby, activity)", "es": "Probar algo nuevo (clase, hobby, actividad)" }, "icon": "fas fa-flask" },
+        { "label": { "en": "Sleep in and fully recharge", "es": "Dormir hasta tarde y recargar energías" }, "icon": "fas fa-bed" },
+        { "label": { "en": "Exercise, go to the gym, or take a yoga class", "es": "Hacer ejercicio, ir al gimnasio o tomar una clase de yoga" }, "icon": "fas fa-dumbbell" },
+        { "label": { "en": "Volunteer or help someone", "es": "Ser voluntario o ayudar a alguien" }, "icon": "fas fa-hands-helping" },
+        { "label": { "en": "Deep clean, declutter, or organize", "es": "Limpiar a fondo, ordenar o organizar" }, "icon": "fas fa-broom" },
+        { "label": { "en": "Wander a new neighborhood or travel locally", "es": "Explorar un nuevo vecindario o viajar localmente" }, "icon": "fas fa-map-marked-alt" },
+        { "label": { "en": "Cook a new recipe or bake", "es": "Cocinar una nueva receta u hornear" }, "icon": "fas fa-utensils" },
+        { "label": { "en": "Reflect or journal", "es": "Reflexionar o escribir un diario" }, "icon": "fas fa-book" },
+        { "label": { "en": "Learn a new skill online", "es": "Aprender una nueva habilidad en línea" }, "icon": "fas fa-laptop" }
       ],
-      "instruction": "Select the skills you’re best at.",
+      "instruction": {
+        "en": "Select the skills you’re best at.",
+        "es": "Selecciona las habilidades en las que eres mejor."
+      },
       "maxSelections": 3
     },
     {
       "id": 6,
       "doc_id": "skills",
       "type": "multi_choice",
-      "text": "Which of these skills do you excel at?",
+      "text": {
+        "en": "Which of these skills do you excel at?",
+        "es": "¿En cuáles de estas habilidades destacas?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "Communication" },
-        { "label": "Critical thinking" },
-        { "label": "Coding" },
-        { "label": "Leadership" },
-        { "label": "Creativity" },
-        { "label": "Analysis" },
-        { "label": "Public speaking" }
+        { "label": { "en": "Communication", "es": "Comunicación" } },
+        { "label": { "en": "Critical thinking", "es": "Pensamiento crítico" } },
+        { "label": { "en": "Coding", "es": "Programación" } },
+        { "label": { "en": "Leadership", "es": "Liderazgo" } },
+        { "label": { "en": "Creativity", "es": "Creatividad" } },
+        { "label": { "en": "Analysis", "es": "Análisis" } },
+        { "label": { "en": "Public speaking", "es": "Hablar en público" } }
       ],
-      "instruction": "Select the skills you’re best at.",
+      "instruction": {
+        "en": "Select the skills you’re best at.",
+        "es": "Selecciona las habilidades en las que eres mejor."
+      },
       "maxSelections": 3
     },
     {
       "id": 7,
       "doc_id": "feedback",
       "type": "multi_choice",
-      "text": "Which feedback do you often receive from others?",
+      "text": {
+        "en": "Which feedback do you often receive from others?",
+        "es": "¿Qué comentarios sueles recibir de los demás?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "You’re a great listener" },
-        { "label": "You explain things well" },
-        { "label": "You're so organized" },
-        { "label": "You’re full of ideas" },
-        { "label": "You stay calm under pressure" },
-        { "label": "You take initiative" }
+        { "label": { "en": "You’re a great listener", "es": "Eres un gran oyente" } },
+        { "label": { "en": "You explain things well", "es": "Explicas bien las cosas" } },
+        { "label": { "en": "You're so organized", "es": "Eres muy organizado/a" } },
+        { "label": { "en": "You’re full of ideas", "es": "Estás lleno/a de ideas" } },
+        { "label": { "en": "You stay calm under pressure", "es": "Mantienes la calma bajo presión" } },
+        { "label": { "en": "You take initiative", "es": "Tomas la iniciativa" } }
       ],
-      "instruction": "Select the feedback that resonates with you.",
+      "instruction": {
+        "en": "Select the feedback that resonates with you.",
+        "es": "Selecciona los comentarios que resuenan contigo."
+      },
       "maxSelections": 2
     },
     {
       "id": 8,
       "doc_id": "struggles",
       "type": "multi_choice",
-      "text": "What are you struggling with most right now?",
+      "text": {
+        "en": "What are you struggling with most right now?",
+        "es": "¿Con qué estás luchando más en este momento?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "Mental health" },
-        { "label": "Physical health" },
-        { "label": "Career direction" },
-        { "label": "Motivation" },
-        { "label": "Burnout" },
-        { "label": "Purpose" }
+        { "label": { "en": "Mental health", "es": "Salud mental" } },
+        { "label": { "en": "Physical health", "es": "Salud física" } },
+        { "label": { "en": "Career direction", "es": "Dirección profesional" } },
+        { "label": { "en": "Motivation", "es": "Motivación" } },
+        { "label": { "en": "Burnout", "es": "Agotamiento" } },
+        { "label": { "en": "Purpose", "es": "Propósito" } }
       ],
-      "instruction": "Choose the challenges you’re facing.",
+      "instruction": {
+        "en": "Choose the challenges you’re facing.",
+        "es": "Elige los desafíos que enfrentas."
+      },
       "maxSelections": 3
     },
     {
       "id": 9,
       "doc_id": "work_preference",
       "type": "single_choice",
-      "text": "Would you rather work for…?",
+      "text": {
+        "en": "Would you rather work for…?",
+        "es": "¿Preferirías trabajar para...?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "A mission-driven company" },
-        { "label": "A high-paying company" },
-        { "label": "Myself" },
-        { "label": "A small, values-driven team" },
-        { "label": "A global brand with resources" },
-        { "label": "A creative studio or agency" },
-        { "label": "Remote or flexible work only" },
-        { "label": "Not sure yet" }
+        { "label": { "en": "A mission-driven company", "es": "Una empresa con misión" } },
+        { "label": { "en": "A high-paying company", "es": "Una empresa bien remunerada" } },
+        { "label": { "en": "Myself", "es": "Para mí mismo/a" } },
+        { "label": { "en": "A small, values-driven team", "es": "Un equipo pequeño y orientado a valores" } },
+        { "label": { "en": "A global brand with resources", "es": "Una marca global con recursos" } },
+        { "label": { "en": "A creative studio or agency", "es": "Un estudio o agencia creativa" } },
+        { "label": { "en": "Remote or flexible work only", "es": "Solo trabajo remoto o flexible" } },
+        { "label": { "en": "Not sure yet", "es": "Aún no estoy seguro/a" } }
       ],
-      "instruction": "Select one option.",
+      "instruction": {
+        "en": "Select one option.",
+        "es": "Selecciona una opción."
+      },
       "maxSelections": 1
     },
     {
       "id": 10,
       "doc_id": "goals",
       "type": "multi_choice",
-      "text": "What do you hope to get out of this experience?",
+      "text": {
+        "en": "What do you hope to get out of this experience?",
+        "es": "¿Qué esperas obtener de esta experiencia?"
+      },
       "canSkip": true,
       "options": [
-        { "label": "Feel more mentally balanced" },
-        { "label": "Regain my motivation" },
-        { "label": "Get clear on my career path" },
-        { "label": "Discover a sense of purpose" },
-        { "label": "Recover from burnout" },
-        { "label": "Improve my overall well-being" },
-        { "label": "Understand myself better" },
-        { "label": "Just exploring — curious to see" }
+        { "label": { "en": "Feel more mentally balanced", "es": "Sentirme más equilibrado/a mentalmente" } },
+        { "label": { "en": "Regain my motivation", "es": "Recuperar mi motivación" } },
+        { "label": { "en": "Get clear on my career path", "es": "Clarificar mi camino profesional" } },
+        { "label": { "en": "Discover a sense of purpose", "es": "Descubrir un sentido de propósito" } },
+        { "label": { "en": "Recover from burnout", "es": "Recuperarme del agotamiento" } },
+        { "label": { "en": "Improve my overall well-being", "es": "Mejorar mi bienestar general" } },
+        { "label": { "en": "Understand myself better", "es": "Entenderme mejor" } },
+        { "label": { "en": "Just exploring — curious to see", "es": "Solo explorando — curioso/a por ver" } }
       ],
-      "instruction": "Pick the three that feel most important right now.",
+      "instruction": {
+        "en": "Pick the three that feel most important right now.",
+        "es": "Elige los tres que sientas más importantes ahora."
+      },
       "maxSelections": 3
     }
   ]

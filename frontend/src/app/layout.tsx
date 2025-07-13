@@ -4,6 +4,7 @@ import { ToastContainer } from "react-toastify";
 import "./globals.css";
 // Import the Font Awesome CSS
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -24,8 +25,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased`}>
-        {children}
-        <ToastContainer />
+        <LanguageProvider>
+          {children}
+          <ToastContainer />
+        </LanguageProvider>
       </body>
     </html>
   );

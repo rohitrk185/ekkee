@@ -8,6 +8,7 @@ import QuestionCard from "./Question";
 import { OptionsSelector } from "./Options";
 import { Button } from "./ui/button";
 import { QuestionHeader } from "./molecules/QuestionHeader";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 type Props = {
   questions: Question[];
@@ -21,13 +22,18 @@ const OnboardingComponent = ({ questions }: Props) => {
     handleNext,
     answers,
   } = useOnboarding();
+  const { language } = useLanguage();
 
-  console.log(answers);
+  // Debug: Log language and questions whenever component renders
+  console.log('Current language:', language);
+  console.log('Questions prop:', questions);
 
   if (!currentQuestion) return null;
 
-  const onboardingText =
-    "Our mission is to better understand you so we can help connect you with resources for a more purpose driven life";
+  const onboardingText = {
+    en: "Our mission is to better understand you so we can help connect you with resources for a more purpose driven life",
+    es: "Nuestra misión es comprenderte mejor para poder ayudarte a conectar con recursos para una vida más orientada al propósito",
+  };
 
   const handleOnNext = () => {
     if (currentStep === questions.length) {
@@ -35,30 +41,35 @@ const OnboardingComponent = ({ questions }: Props) => {
       // Route to success page
       return;
     }
-
     handleNext();
     return;
   };
 
+  // Get translated fields with fallback
+  const t = (obj: Record<string, string> | undefined) =>
+    (obj && (obj[language] || obj["en"])) || "";
+
   return (
     <div className="px-4 pb-16 flex flex-col gap-4 relative">
       <QuestionHeader headingText={"Eekee"} />
-
       <CurStepIndicator curStep={currentStep} totalSteps={questions.length} />
       {currentStep === 1 ? (
-        <p className="font-medium">{onboardingText}</p>
+        <p className="font-medium">{t(onboardingText)}</p>
       ) : null}
       <QuestionCard
-        questionTitle={currentQuestion.questionTitle}
-        questionDesc={currentQuestion.desciption}
+        questionTitle={t(currentQuestion.questionTitle)}
+        questionDesc={t(currentQuestion.desciption)}
       />
+      {currentQuestion.instruction && t(currentQuestion.instruction) && (
+        <p className="font-medium text-gray-600 text-center mb-2">{t(currentQuestion.instruction)}</p>
+      )}
       <OptionsSelector
         options={currentQuestion.options}
         isMultiChoice={currentQuestion.isMultiChoice}
         maxSelections={currentQuestion.maxSelections || Infinity}
         onSelectionChange={handleAnswerChange}
+        language={language}
       />
-
       <Button
         variant="default"
         onClick={handleOnNext}
