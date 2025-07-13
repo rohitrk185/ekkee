@@ -10,7 +10,7 @@ const OnboardingHeader = ({ isSkippable }: Props) => {
     <div className="flex justify-between">
       <ArrowLeftIcon />
 
-      <button onClick={handleSkipButton}>
+      <button >
         {isSkippable ? "Skip" : "Next"}
       </button>
     </div>
