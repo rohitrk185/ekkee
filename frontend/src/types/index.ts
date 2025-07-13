@@ -1,12 +1,9 @@
-export interface Option {
-  optionText: string;
-}
-
 export interface Question {
   questionId: number;
   questionTitle: string;
   desciption: string;
-  options: Array<Option>;
+  options: string[];
   isSkippable: boolean;
   isMultiChoice: boolean;
+  maxSelections?: number;
 }

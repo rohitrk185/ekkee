@@ -8,7 +8,7 @@ import React, {
   ReactNode,
 } from "react";
 
-import { Question, Option } from "@/types";
+import { Question } from "@/types";
 
 // Defines the shape of the context's value
 interface OnboardingContextType {
