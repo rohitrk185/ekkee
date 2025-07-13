@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -120,5 +122,11 @@
     @apply bg-background text-foreground;
     font-family: 'Poppins', sans-serif;
     @apply text-primary bg-background;
+  }
+
+
+  /* Manually added the font since it's unavaliability */
+  .font-shippori {
+    font-family: 'Shippori Mincho B1', serif;
   }
 }
