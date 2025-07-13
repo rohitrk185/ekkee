@@ -10,6 +10,7 @@ import { Button } from "./ui/button";
 import { QuestionHeader } from "./molecules/QuestionHeader";
 import { useRouter } from "next/navigation";
 import { submitAnswers } from "@/services/onboardingApi";
+import { toast } from "react-toastify";
 
 type Props = {
   questions: Question[];
@@ -37,7 +38,13 @@ const OnboardingComponent = ({ questions }: Props) => {
   const handleOnNext = () => {
     if (currentStep === questions.length) {
       // Call backend api to store options
-      submitAnswers(answers);
+      try {
+        submitAnswers(answers);
+      } catch (error) {
+        toast.error("Unable to complete your onboarding. Please try again", {
+          toastId: "onboardingError",
+        });
+      }
       // Route to success page
       router.push("/onboarding-success");
       return;
