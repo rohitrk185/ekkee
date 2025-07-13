@@ -26,3 +26,24 @@ def list_questions():
         data["id"] = doc.id  # include document ID
         questions.append(data)
     return questions
+
+
+@router.get("/questions/{stepId}")
+def get_question_by_step(stepId: int):
+    questions_ref = db.collection("Questions").order_by("id")
+    docs = questions_ref.stream()
+
+    count = 0
+    for doc in docs:
+        count += 1
+        if count == stepId:
+            data = doc.to_dict()
+            data["id"] = doc.id
+            return data
+
+    return JSONResponse(status_code=404, content={"message": "Question not found"})
+
+
+
+
+
