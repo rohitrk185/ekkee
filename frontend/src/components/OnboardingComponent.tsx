@@ -9,6 +9,8 @@ import { OptionsSelector } from "./Options";
 import { Button } from "./ui/button";
 import { QuestionHeader } from "./molecules/QuestionHeader";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useRouter } from "next/navigation";
+
 
 type Props = {
   questions: Question[];
@@ -23,6 +25,7 @@ const OnboardingComponent = ({ questions }: Props) => {
     answers,
   } = useOnboarding();
   const { language } = useLanguage();
+  const router = useRouter();
 
   // Debug: Log language and questions whenever component renders
   console.log('Current language:', language);
@@ -35,10 +38,11 @@ const OnboardingComponent = ({ questions }: Props) => {
     es: "Nuestra misión es comprenderte mejor para poder ayudarte a conectar con recursos para una vida más orientada al propósito",
   };
 
-  const handleOnNext = () => {
+    const handleOnNext = () => {
     if (currentStep === questions.length) {
       // Call backend api to store options
       // Route to success page
+      router.push('/onboarding-success');
       return;
     }
     handleNext();

@@ -1,5 +1,5 @@
-import type { Config } from "tailwindcss"
-import fontFamily from "tailwindcss/defaultTheme"
+import type { Config } from "tailwindcss";
+import defaultTheme from "tailwindcss/defaultTheme";
 
 const config: Config = {
   content: [
@@ -11,18 +11,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#FDFDFD",   // white background
-        light: "#F3F3F3",        // light gray (option hover)
-        border: "#DBDBDB",       // border lines
-        secondary: "#5D5D5D",    // subtext
-        primary: "#080808",      // main text and buttons
+        background: "#FDFDFD", // white background
+        light: "#F3F3F3", // light gray (option hover)
+        border: "#DBDBDB", // border lines
+        secondary: "#5D5D5D", // subtext
+        primary: "#080808", // main text and buttons
       },
       fontFamily: {
-        sans: ["Poppins", ...fontFamily.sans],
+        sans: ["Poppins", ...defaultTheme.fontFamily.sans],
+        shippori: ["var(--font-shippori)", "serif"],
       },
     },
   },
   plugins: [],
-}
+};
 
-export default config
+export default config;
