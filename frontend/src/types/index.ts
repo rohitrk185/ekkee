@@ -4,9 +4,9 @@ export interface Option {
 }
 
 export interface Question {
-  questionId: number;
+  questionId: string;
   questionTitle: Record<string, string>;
-  desciption: Record<string, string>;
+  description: Record<string, string>;
   instruction?: Record<string, string>;
   options: Option[];
   isSkippable: boolean;

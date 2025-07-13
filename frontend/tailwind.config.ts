@@ -19,7 +19,6 @@ const config: Config = {
       },
       fontFamily: {
         sans: ["Poppins", ...defaultTheme.fontFamily.sans],
-        shippori: ["var(--font-shippori)", "serif"],
       },
     },
   },

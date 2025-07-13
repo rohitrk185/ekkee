@@ -1,6 +1,5 @@
 "use client";
 
-import { cn } from "@/lib/utils";
 import WordSeparator from "@/components/ui/wordSeperator";
 import { useRouter } from "next/navigation";
 import { ArrowRight } from "lucide-react";

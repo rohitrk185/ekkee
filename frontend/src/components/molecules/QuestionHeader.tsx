@@ -3,6 +3,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "../ui/button";
 import { useOnboarding } from "@/contexts/onboardingContext";
+import { useRouter } from "next/navigation";
 
 interface QuestionHeaderProps {
   headingText: string;
@@ -13,13 +14,25 @@ interface QuestionHeaderProps {
 export const QuestionHeader: React.FC<QuestionHeaderProps> = ({
   headingText,
 }) => {
-  const { handleBack, currentStep, questions, handleNext } = useOnboarding();
+  const router = useRouter();
+  const { handleBack, currentStep, questions, handleNext, clearCurrentAnswer } =
+    useOnboarding();
 
   const onBack = () => {
+    if (currentStep === 1) {
+      return;
+    }
     handleBack();
   };
 
   const onSkip = () => {
+    clearCurrentAnswer();
+    if (currentStep === questions.length) {
+      // Call backend api to store options
+      // Route to success page
+      router.push("/onboarding-success");
+      return;
+    }
     handleNext();
   };
 
@@ -27,7 +40,7 @@ export const QuestionHeader: React.FC<QuestionHeaderProps> = ({
     <header className="w-full flex flex-col justify-between items-center pt-3 bg-white ">
       {/* Back Button */}
       <div className="w-full flex items-center justify-between">
-        {currentStep !== 1 && currentStep !== questions.length ? (
+        {currentStep !== 1 ? (
           <Button
             onClick={onBack}
             variant="ghost"

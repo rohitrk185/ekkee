@@ -8,15 +8,15 @@ import QuestionCard from "./Question";
 import { OptionsSelector } from "./Options";
 import { Button } from "./ui/button";
 import { QuestionHeader } from "./molecules/QuestionHeader";
-import { useLanguage } from "@/contexts/LanguageContext";
 import { useRouter } from "next/navigation";
-
+import { submitAnswers } from "@/services/onboardingApi";
 
 type Props = {
   questions: Question[];
 };
 
 const OnboardingComponent = ({ questions }: Props) => {
+  const router = useRouter();
   const {
     currentQuestion,
     handleAnswerChange,
@@ -24,12 +24,8 @@ const OnboardingComponent = ({ questions }: Props) => {
     handleNext,
     answers,
   } = useOnboarding();
-  const { language } = useLanguage();
-  const router = useRouter();
 
-  // Debug: Log language and questions whenever component renders
-  console.log('Current language:', language);
-  console.log('Questions prop:', questions);
+  console.log("answers: ", answers);
 
   if (!currentQuestion) return null;
 
@@ -38,42 +34,44 @@ const OnboardingComponent = ({ questions }: Props) => {
     es: "Nuestra misión es comprenderte mejor para poder ayudarte a conectar con recursos para una vida más orientada al propósito",
   };
 
-    const handleOnNext = () => {
+  const handleOnNext = () => {
     if (currentStep === questions.length) {
       // Call backend api to store options
+      submitAnswers(answers);
       // Route to success page
-      router.push('/onboarding-success');
+      router.push("/onboarding-success");
       return;
     }
     handleNext();
     return;
   };
 
-  // Get translated fields with fallback
-  const t = (obj: Record<string, string> | undefined) =>
-    (obj && (obj[language] || obj["en"])) || "";
-
   return (
     <div className="px-4 pb-16 flex flex-col gap-4 relative">
       <QuestionHeader headingText={"Eekee"} />
       <CurStepIndicator curStep={currentStep} totalSteps={questions.length} />
       {currentStep === 1 ? (
-        <p className="font-medium">{t(onboardingText)}</p>
+        <p className="font-medium">{onboardingText.en}</p>
       ) : null}
       <QuestionCard
-        questionTitle={t(currentQuestion.questionTitle)}
-        questionDesc={t(currentQuestion.desciption)}
+        key={currentQuestion.questionTitle.en}
+        questionTitle={currentQuestion.questionTitle.en}
+        questionDesc={currentQuestion.description.en}
       />
-      {currentQuestion.instruction && t(currentQuestion.instruction) && (
-        <p className="font-medium text-gray-600 text-center mb-2">{t(currentQuestion.instruction)}</p>
+      {currentQuestion.instruction && currentQuestion.instruction && (
+        <p className="font-medium text-gray-600 text-center mb-2">
+          {currentQuestion.instruction.en}
+        </p>
       )}
       <OptionsSelector
+        key={currentQuestion.questionId}
+        questionId={currentQuestion.questionId}
         options={currentQuestion.options}
         isMultiChoice={currentQuestion.isMultiChoice}
         maxSelections={currentQuestion.maxSelections || Infinity}
         onSelectionChange={handleAnswerChange}
-        language={language}
       />
+
       <Button
         variant="default"
         onClick={handleOnNext}

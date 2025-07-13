@@ -5,18 +5,12 @@ type Props = {
   isSkippable: boolean;
 };
 
-const handleSkipButton = () => {
-  // filler fn;
-};
-
 const OnboardingHeader = ({ isSkippable }: Props) => {
   return (
     <div className="flex justify-between">
       <ArrowLeftIcon />
 
-      <button >
-        {isSkippable ? "Skip" : "Next"}
-      </button>
+      <button>{isSkippable ? "Skip" : "Next"}</button>
     </div>
   );
 };

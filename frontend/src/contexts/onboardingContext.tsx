@@ -6,10 +6,10 @@ import React, {
   useState,
   useMemo,
   ReactNode,
+  useCallback,
 } from "react";
 
 import { Question } from "@/types";
-import { useLanguage } from "@/contexts/LanguageContext";
 
 // Defines the shape of the context's value
 interface OnboardingContextType {
@@ -22,6 +22,7 @@ interface OnboardingContextType {
   handleAnswerChange: (optionText: string) => void;
   handleNext: () => void;
   handleBack: () => void;
+  clearCurrentAnswer: () => void;
   //   resetOnboarding: () => void;
 }
 
@@ -40,11 +41,10 @@ export const OnboardingProvider = ({
 }: OnboardingProviderProps) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [answers, setAnswers] = useState<Record<string, string[]>>({});
-  const { language } = useLanguage();
 
   const currentQuestion = useMemo<Question | null>(() => {
     return questions[currentStep - 1] || null;
-  }, [currentStep, questions, language]);
+  }, [currentStep, questions]);
 
   const handleAnswerChange = (optionText: string) => {
     if (!currentQuestion) return;
@@ -78,6 +78,11 @@ export const OnboardingProvider = ({
   //     setAnswers({});
   //   };
 
+  const clearCurrentAnswer = useCallback(() => {
+    const questionKey = `q_${currentQuestion?.questionId}`;
+    setAnswers((prev) => ({ ...prev, [questionKey]: [] }));
+  }, [currentQuestion?.questionId]);
+
   const value: OnboardingContextType = {
     currentStep,
     answers,
@@ -88,6 +93,7 @@ export const OnboardingProvider = ({
     handleAnswerChange,
     handleNext,
     handleBack,
+    clearCurrentAnswer,
     // resetOnboarding,
   };
 
