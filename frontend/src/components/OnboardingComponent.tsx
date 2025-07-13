@@ -7,14 +7,22 @@ import CurStepIndicator from "./curStepIndicator";
 import QuestionCard from "./Question";
 import { OptionsSelector } from "./Options";
 import { Button } from "./ui/button";
+import { QuestionHeader } from "./molecules/QuestionHeader";
 
 type Props = {
   questions: Question[];
 };
 
 const OnboardingComponent = ({ questions }: Props) => {
-  const { currentQuestion, handleAnswerChange, currentStep, handleNext } =
-    useOnboarding();
+  const {
+    currentQuestion,
+    handleAnswerChange,
+    currentStep,
+    handleNext,
+    answers,
+  } = useOnboarding();
+
+  console.log(answers);
 
   if (!currentQuestion) return null;
 
@@ -33,7 +41,9 @@ const OnboardingComponent = ({ questions }: Props) => {
   };
 
   return (
-    <div className="my-10 px-4 flex flex-col gap-4">
+    <div className="px-4 pb-16 flex flex-col gap-4 relative">
+      <QuestionHeader headingText={"Eekee"} />
+
       <CurStepIndicator curStep={currentStep} totalSteps={questions.length} />
       {currentStep === 1 ? (
         <p className="font-medium">{onboardingText}</p>
@@ -53,7 +63,7 @@ const OnboardingComponent = ({ questions }: Props) => {
         variant="default"
         onClick={handleOnNext}
         type="button"
-        className="mt-10 px-16 max-w-max mx-auto"
+        className="mt-10 px-16 max-w-max mx-auto bottom-0"
       >
         Next
       </Button>
