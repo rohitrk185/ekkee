@@ -17,12 +17,13 @@ export async function submitAnswers(answers: Record<string, string[]>) {
 }
 
 export async function submitCurQuestionSelection(
-  questionId: number,
+  questionOrder: number,
+  questionId: string,
   selections: string[],
   submissionDocId?: string
 ) {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/submit/${questionId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/v1/submit/${questionOrder}`,
     {
       method: "POST",
       headers: {
@@ -31,6 +32,7 @@ export async function submitCurQuestionSelection(
       body: JSON.stringify({
         selections,
         submissionDocId: submissionDocId || null,
+        question_id: questionId,
       }),
     }
   );

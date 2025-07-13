@@ -56,6 +56,7 @@ const OnboardingComponent = ({ questions }: Props) => {
       const { next_question: nextQuestionData, submissionDocumentId } =
         await submitCurQuestionSelection(
           currentQuestion.order,
+          currentQuestion.questionId,
           selectedOptions,
           submissionDocId
         );
