@@ -1,6 +1,5 @@
 import OnboardingComponent from "@/components/OnboardingComponent";
 import { OnboardingProvider } from "@/contexts/onboardingContext";
-import { Question } from "@/types";
 import React from "react";
 
 // Implement SSG and pass it to the component below
@@ -61,6 +60,7 @@ async function getOnboardingData() {
       // Map API fields to your frontend schema
       questionId: question.id,
       questionTitle: question.text,
+      desciption: question.desciption || "", // Provide desciption, fallback to empty string if missing
       isSkippable: question.canSkip,
 
       // Convert the array of objects to an array of strings
