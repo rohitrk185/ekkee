@@ -11,6 +11,7 @@ interface QuestionsData {
   options: Option[];
   type: string;
   maxSelections: number;
+  order: number;
 }
 
 async function getOnboardingData() {
@@ -28,25 +29,27 @@ async function getOnboardingData() {
       throw new Error(`Failed to fetch data: ${response.statusText}`);
     }
 
-    const data: QuestionsData[] = await response.json();
+    const dataList: QuestionsData[] = await response.json();
+    const data: QuestionsData = dataList[0];
     console.log("data: ", data);
 
-    const questions: Question[] = data.map((question: QuestionsData) => {
-      const questionData: Question = {
-        // Map API fields to your frontend schema
-        questionId: question.id,
-        questionTitle: question.text,
-        description: question.instruction || "", // Provide description, fallback to empty string if missing
-        isSkippable: question.canSkip,
-        // Convert the array of objects to an array of strings
-        options: question.options.map((option: Option) => option),
-        // Determine isMultiChoice based on the 'type' field
-        isMultiChoice: question.type === "multi_choice",
-        // Carry over maxSelections if it exists
-        maxSelections: question.maxSelections || Infinity,
-      };
-      return questionData;
-    });
+    // const data: QuestionsData = await response.json();
+    const questionData: Question = {
+      // Map API fields to your frontend schema
+      questionId: data.id,
+      questionTitle: data.text,
+      description: data.instruction || "", // Provide description, fallback to empty string if missing
+      isSkippable: data.canSkip,
+      // Convert the array of objects to an array of strings
+      options: data.options.map((option: Option) => option),
+      // Determine isMultiChoice based on the 'type' field
+      isMultiChoice: data.type === "multi_choice",
+      // Carry over maxSelections if it exists
+      maxSelections: data.maxSelections || Infinity,
+      order: data.order,
+    };
+
+    const questions: Question[] = [questionData];
 
     return questions;
   } catch (error) {
@@ -59,7 +62,7 @@ const OnboardingPage = async () => {
   // Debug: Log the current language context value
   const questions = await getOnboardingData();
   return (
-    <OnboardingProvider questions={questions}>
+    <OnboardingProvider questionsList={questions}>
       <OnboardingComponent questions={questions} />
     </OnboardingProvider>
   );
