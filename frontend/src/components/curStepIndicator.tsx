@@ -10,7 +10,7 @@ const CurStepIndicator = ({ curStep, totalSteps }: Props) => {
   return (
     <div className="flex flex-col gap-2">
       <h3>Step {`${curStep}/${totalSteps}`}</h3>
-      <Progress value={(curStep / totalSteps) * 100} />
+      <Progress value={progressValue} />
     </div>
   );
 };

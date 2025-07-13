@@ -4,8 +4,6 @@
 
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import LanguageSelect from "@/components/LanguageSelect";
-import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import React from "react";
 
 const translations = {
@@ -23,12 +21,9 @@ const translations = {
   },
 } as const;
 
-type Language = keyof typeof translations;
-
 function WelcomeContent() {
   const router = useRouter();
-  const { language } = useLanguage();
-  const t = translations[(language as Language)] || translations.en;
+  const t = translations.en;
 
   const handleStart = () => {
     router.push("/learn/ikagai");
@@ -36,10 +31,6 @@ function WelcomeContent() {
 
   return (
     <div className="w-screen h-screen flex flex-col bg-black text-white p-6  mx-auto">
-      {/* Language dropdown */}
-      <div className="flex justify-end w-full mb-2">
-        <LanguageSelect />
-      </div>
       {/* Top pinned header */}
       <div className="w-[16.4%] mb-4">
         <h1 className="w-full flex items-center justify-start text-lg font-semibold">

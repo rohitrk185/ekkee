@@ -2,21 +2,21 @@
 
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { MessageSquare, ArrowLeft } from "lucide-react";
+import { MessageSquare } from "lucide-react";
 import Image from "next/image";
 export default function OnboardingSuccess() {
   const router = useRouter();
 
   return (
     <div className="min-h-screen bg-background text-primary flex flex-col">
-      <div className="flex items-center justify-between px-4 py-4">
+      {/* <div className="flex items-center justify-between px-4 py-4">
         <button
           onClick={() => router.back()}
           className="p-2 rounded-full hover:bg-light transition"
         >
           <ArrowLeft size={24} className="text-primary" />
         </button>
-      </div>
+      </div> */}
       <div className="flex text-center px-4 py-8 justify-center items-center ">
         <h1 className="text-2xl font-semibold text-primary">Eekee</h1>
       </div>
