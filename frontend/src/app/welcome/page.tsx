@@ -35,7 +35,7 @@ function WelcomeContent() {
   };
 
   return (
-    <div className="w-[360px] h-[721px] flex flex-col bg-black text-white p-6 max-w-md mx-auto">
+    <div className="w-screen h-screen flex flex-col bg-black text-white p-6  mx-auto">
       {/* Language dropdown */}
       <div className="flex justify-end w-full mb-2">
         <LanguageSelect />

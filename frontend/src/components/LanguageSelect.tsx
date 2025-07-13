@@ -13,7 +13,7 @@ export default function LanguageSelect() {
     <select
       value={language}
       onChange={e => setLanguage(e.target.value)}
-      className="rounded px-2 py-1 border border-gray-300 text-black"
+      className="rounded px-2 py-1 border border-gray-300 text-black bg-white"
       style={{ marginBottom: 16 }}
       aria-label="Select language"
     >
