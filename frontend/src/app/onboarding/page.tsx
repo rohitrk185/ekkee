@@ -1,13 +1,13 @@
+"use client";
+
 import OnboardingComponent from "@/components/OnboardingComponent";
 import { OnboardingProvider } from "@/contexts/onboardingContext";
 import { Option, Question } from "@/types";
 import React from "react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
-// This function fetches data from your external API.
-// Next.js automatically memoizes (caches) the result of this fetch.
 async function getOnboardingData() {
   try {
-    // // Replace this URL with your actual external API endpoint
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/api/v1/questions`,
       {
@@ -43,22 +43,92 @@ async function getOnboardingData() {
     return questions;
   } catch (error) {
     console.error("Could not fetch onboarding questions:", error);
-    // In case of an error, return an empty array to prevent the page from crashing.
-    // You could also implement more robust error handling here.
     return [];
   }
 }
 
-const page = async () => {
-  const questions = await getOnboardingData();
+const OnboardingPage = () => {
+  const { language } = useLanguage();
+  // Debug: Log the current language context value
+  console.log("Language context in onboarding/page:", language);
+  const [questions, setQuestions] = React.useState<Question[]>([]);
+  const [fetchError, setFetchError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    getOnboardingData()
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const mapped = data.map((question: any) => ({
+            questionId: question.id,
+            questionTitle:
+              typeof question.text === "object" && question.text !== null
+                ? question.text
+                : {
+                    en: typeof question.text === "string" ? question.text : "",
+                  },
+            desciption:
+              typeof question.desciption === "object" &&
+              question.desciption !== null
+                ? question.desciption
+                : {
+                    en:
+                      typeof question.desciption === "string"
+                        ? question.desciption
+                        : "",
+                  },
+            instruction:
+              typeof question.instruction === "object" &&
+              question.instruction !== null
+                ? question.instruction
+                : {
+                    en:
+                      typeof question.instruction === "string"
+                        ? question.instruction
+                        : "",
+                  },
+            isSkippable: question.canSkip,
+            options: question.options.map((option: any) => ({
+              label:
+                typeof option.label === "object" && option.label !== null
+                  ? option.label
+                  : {
+                      en:
+                        typeof option.label === "string"
+                          ? option.label
+                          : "Unknown",
+                    },
+              icon: option.icon,
+            })),
+            isMultiChoice: question.type === "multi_choice",
+            maxSelections: question.maxSelections || Infinity,
+          }));
+          setQuestions(mapped);
+          setFetchError(null);
+        } else {
+          setFetchError(
+            "Could not load onboarding questions. Please try again later."
+          );
+        }
+      })
+      .catch((error) => {
+        setFetchError(
+          "Could not load onboarding questions. Please check your network or contact support."
+        );
+      });
+  }, [language]);
+
   return (
     <OnboardingProvider questions={questions}>
       <div className="container">
-        {/* Render your full onboarding flow here */}
+        {fetchError && (
+          <div className="bg-red-100 text-red-700 p-4 mb-4 rounded">
+            {fetchError}
+          </div>
+        )}
         <OnboardingComponent questions={questions} />
       </div>
     </OnboardingProvider>
   );
 };
 
-export default page;
+export default OnboardingPage;

@@ -21,7 +21,7 @@ export default function IkigaiDefinitionPage() {
 
   return (
     <div
-      className="w-[360px] h-[721px] flex flex-col items-center justify-start bg-white text-black p-6 max-w-md mx-auto relative cursor-pointer"
+      className="w-screen h-screen flex flex-col items-center justify-start bg-white text-black p-6 mx-auto relative cursor-pointer"
       onClick={handleContainerClick}
     >
       {/* Top-right arrow button */}
