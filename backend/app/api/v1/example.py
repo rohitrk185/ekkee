@@ -157,7 +157,7 @@ async def submit_answers(order_id: int, payload: Answers, request: Request):
                     "description": next_question.get("instruction"),
                     "isSkippable": next_question.get("canSkip"),
                     "options": next_question.get("options"),
-                    "isMultiChoice": next_question.get("isMultiChoice"),
+                    "isMultiChoice": next_question.get("type") == "multi_choice",
                     "maxSelections": next_question.get("maxSelections"),
                     "order": next_question.get("order")
                 }
