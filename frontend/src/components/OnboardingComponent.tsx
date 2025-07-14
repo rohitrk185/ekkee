@@ -22,7 +22,7 @@ const OnboardingComponent = ({ questions }: Props) => {
     currentQuestion,
     handleAnswerChange,
     currentStep,
-    handleNext,
+    // handleNext,
     answers,
     storeQuestionData,
     submissionDocId,
