@@ -14,7 +14,7 @@ A full-stack application with a Next.js frontend and a FastAPI backend.
 ## Project Structure
 
 ```
-eekee/
+ekkee/
   backend/    # FastAPI backend
   frontend/   # Next.js frontend
 ```
@@ -31,7 +31,7 @@ eekee/
 
 1. **Clone the repository** and navigate to the backend directory:
    ```bash
-   cd ekee/backend
+   cd ekke/backend
    ```
 
 2. **Create a virtual environment** (optional but recommended):
@@ -69,7 +69,7 @@ eekee/
 
 1. **Navigate to the frontend directory:**
    ```bash
-   cd eekee/frontend
+   cd ekkee/frontend
    ```
 
 2. **Install dependencies:**
